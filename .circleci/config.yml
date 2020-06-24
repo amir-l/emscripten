@@ -21,6 +21,12 @@ executors:
       xcode: "9.0"
 
 commands:
+  emsdk-env:
+    description: "emsdk_env.sh"
+    steps:
+      - run:
+          name: emsdk_env.sh
+          command: echo "source ~/emsdk/emsdk_env.sh" >> $BASH_ENV
   npm-install:
     description: "npm ci"
     steps:
@@ -30,12 +36,6 @@ commands:
             # Will add emsdk version of node to PATH
             source ~/emsdk/emsdk_env.sh
             npm ci
-  set-config:
-    description: "set EM_CONFIG"
-    steps:
-      - run:
-          name: Set EM_CONFIG
-          command: echo "export EM_CONFIG=\"$HOME/emsdk/.emscripten\"" >> $BASH_ENV
   build:
     description: "Install emsdk build all libraries using embuilder"
     steps:
@@ -69,6 +69,7 @@ commands:
             cd -
             echo "final .emscripten:"
             cat ~/emsdk/.emscripten
+      - emsdk-env
       - npm-install
       - run:
           name: gen_struct_info
@@ -125,6 +126,7 @@ commands:
           # Must be absolute path or relative path from working_directory
           at: ~/
       - checkout
+      - emsdk-env
       - npm-install
       - run:
           name: run tests
@@ -142,6 +144,7 @@ commands:
           # Must be absolute path or relative path from working_directory
           at: ~/
       - checkout
+      - emsdk-env
       - npm-install
       - run:
           name: Install brew package dependencies
@@ -160,6 +163,7 @@ commands:
           # Must be absolute path or relative path from working_directory
           at: ~/
       - checkout
+      - emsdk-env
       - npm-install
       - run:
           name: download firefox
@@ -259,6 +263,7 @@ commands:
           # Must be absolute path or relative path from working_directory
           at: ~/
       - checkout
+      - emsdk-env
       - npm-install
       - run:
           name: download chrome
@@ -292,6 +297,7 @@ commands:
             wget -O ~/chrome.deb https://dl.google.com/linux/direct/google-chrome-beta_current_amd64.deb
             dpkg -i ~/chrome.deb
       - checkout
+      - emsdk-env
       - npm-install
       - run:
           name: run sockets tests
@@ -334,6 +340,7 @@ jobs:
             echo "CACHE = os.path.expanduser('~/cache')" >> .emscripten
             echo "final .emscripten:"
             cat ~/emsdk/.emscripten
+      - emsdk-env
       - npm-install
       - run:
           name: embuilder build ALL
