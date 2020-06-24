@@ -317,6 +317,7 @@ jobs:
           command: |
             curl -# -L -o ~/emsdk-master.tar.gz https://github.com/emscripten-core/emsdk/archive/master.tar.gz
             tar -C ~ -xf ~/emsdk-master.tar.gz
+            mv ~/emsdk-master ~/emsdk
             cd ~/emsdk
             ./emsdk update-tags
             ./emsdk install tot-fastcomp
