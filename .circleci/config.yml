@@ -67,7 +67,7 @@ commands:
             test -f ~/vms/wasmer && echo "WASMER = os.path.expanduser(os.path.join('~', 'vms', 'wasmer')) ; WASM_ENGINES.append(WASMER)" >> .emscripten || true
             cd -
             echo "final .emscripten:"
-            cat .emscripten
+            cat ~/emsdk/.emscripten
       - npm-install
       - run:
           name: gen_struct_info
@@ -331,7 +331,7 @@ jobs:
             echo "import os" >> .emscripten
             echo "CACHE = os.path.expanduser('~/cache')" >> .emscripten
             echo "final .emscripten:"
-            cat .emscripten
+            cat ~/emsdk/.emscripten
       - npm-install
       - run:
           name: embuilder build ALL
